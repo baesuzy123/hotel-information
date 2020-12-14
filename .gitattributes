@@ -98,3 +98,8 @@
 陳思嘉
 """
 
+for i in range(len(location)):
+    lowerprice = location[2]
+    higherprice = location[3]
+    meal1 = location[3]
+    if 
