@@ -106,21 +106,21 @@ list_budget = list_need[5].sort()  # 預算範圍([最低預算, 最高預算])
 list_infooutput = []  # 需要輸出的飯店資訊
 list_rangeoutput = []  # 最後輸出的價格範圍
 
-for i in range(len(information)):
-    lowerprice = information[i][2]  # 供餐且本國籍的最低價
-    higherprice = information[i][3]  # 供餐且本國籍的最高價
+for i in range(len(list_information)):
+    lowerprice = list_information[i][2]  # 供餐且本國籍的最低價
+    higherprice = list_information[i][3]  # 供餐且本國籍的最高價
 
     if meal == "否":
-        if nation == "否" and information[i][10] != 0 and information[i][11] != 0:
-            lowerprice = information[i][10]  #不供餐且非本國籍的最低價
-            higherprice = information[i][11]  #不供餐且非本國籍的最高價
-        if nation == "是" and information[i][8] != 0 and information[i][9] != 0:
-            lowerprice = information[i][8]  #不供餐且本國籍的最低價
-            higherprice = information[i][9]  #不供餐且本國籍的最高價
+        if nation == "否" and list_information[i][10] != 0 and list_information[i][11] != 0:
+            lowerprice = list_information[i][10]  #不供餐且非本國籍的最低價
+            higherprice = list_information[i][11]  #不供餐且非本國籍的最高價
+        if nation == "是" and list_information[i][8] != 0 and list_information[i][9] != 0:
+            lowerprice = list_information[i][8]  #不供餐且本國籍的最低價
+            higherprice = list_information[i][9]  #不供餐且本國籍的最高價
     if meal == "是":
-        if nation == "否" and information[i][6] != 0 and information[i][7] != 0:
-            lowerprice = information[i][6]  # 供餐且非本國籍的最低價
-            higherprice = information[i][7]  # 供餐且非本國籍的最高價
+        if nation == "否" and list_information[i][6] != 0 and list_information[i][7] != 0:
+            lowerprice = list_information[i][6]  # 供餐且非本國籍的最低價
+            higherprice = list_information[i][7]  # 供餐且非本國籍的最高價
 
     if citizen == "是":
         subsidy = 500 * 14  # 台北市民補助
@@ -133,6 +133,6 @@ for i in range(len(information)):
 
     if list_sum[0] >= list_budget[0] or list_sum[1] <= list_budget[1]:
         list_rangeoutput.append(list_sum)  # 最後輸出的價格範圍
-        list_infooutput.append(information[i])  # 需要輸出的飯店資訊
+        list_infooutput.append(list_information[i])  # 需要輸出的飯店資訊
     else:
         continue
