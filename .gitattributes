@@ -201,7 +201,7 @@ class UserInput(tk.Frame):
         self.create_widgets()
 
     # 取得使用者輸入的資料
-    def reply(self):  # 清空文字區域
+    def reply(self):
         user = [self.v.get(), yesno_list[int(self.v_nation.get())], yesno_list[int(self.v_meal.get())],
                 yesno_list[int(self.v_citizen.get())], [self.num1.get(), self.num2.get()]]
         self.need = user
@@ -221,6 +221,10 @@ class UserInput(tk.Frame):
             dist = k[0]
             if my_input.need[0] == dist:  # 行政區篩選
                 list_information.append(k)
+            elif my_input.need[0] == '行政區':
+                list_information.append(k)
+            else:
+                pass
 
         for i in range(len(list_information)):
             lowerprice = list_information[i][2]  # 供餐且本國籍的最低價
@@ -251,7 +255,7 @@ class UserInput(tk.Frame):
                list_sum[1] not in range(list_budget[0] * 14, list_budget[1] * 14):
                 continue
             else:  # 篩選結果（輸出項目：評價, 旅館名稱, 總花費區間）
-                list_infooutput.append([list_information[i][12], list_information[i][1], list_sum])
+                list_infooutput.append([list_information[i][12], list_sum, list_information[i][1]])
 
         # 依評價由高到低排列
         output = []
@@ -259,6 +263,7 @@ class UserInput(tk.Frame):
             output.append(hotels)
         output.sort()
         output.reverse()
+
         # 輸出資料整理成表格
         if output == []:
             result = ''
@@ -268,15 +273,14 @@ class UserInput(tk.Frame):
             turn = 0
             for hotel in output:
                 turn += 1
-                name = hotel[1]
+                name = hotel[2]
                 rate = hotel[0]
-                prices = str(hotel[2][0]) + '-' + str(hotel[2][1])
+                prices = str(hotel[1][0]) + '-' + str(hotel[1][1])
                 result.add_row([turn, name, (str(rate) + '/5星' + ''), prices])
                 result.add_row(['', '', '', ''])
-            result.align['編號'] = 'l'
-            result.align['旅館'] = 'l'
-            result.align['評價'] = 'r'
-            result.align['價位選擇'] = 'r'
+                
+            result.align = 'l'
+            
             result.set_style(pt.PLAIN_COLUMNS)
 
         # 建立文字區域以顯示輸出結果
@@ -294,13 +298,13 @@ class UserInput(tk.Frame):
         self.l2 = tk.Label(self, text='請輸入篩選條件', bg='RoyalBlue', font=f1, fg='white', width=80,
                            height=2)
         self.l2.grid(row=10, column=0, columnspan=10)
-        self.can = tk.Canvas(self, width=600, height=1100, bg='WhiteSmoke')
+
         # 設定按鈕於觸發後處理 reply 函式
         self.b1 = tk.Button(self, text='確定', font=f1, highlightcolor='RoyalBlue', command=self.reply)
         self.l_district = tk.Label(self, text='行政區:', font=f1)
 
         # 建立下拉式表單選取行政區
-        self.optionList = ('萬華區', '內湖區', '南港區', '大安區', '士林區', '北投區', '信義區', '大同區', '中正區', '松山區', '中山區')
+        self.optionList = ('行政區','萬華區', '內湖區', '南港區', '大安區', '士林區', '北投區', '信義區', '大同區', '中正區', '松山區', '中山區')
         self.v = tk.StringVar()
         self.v.set("行政區")
         self.optionmenu = tk.OptionMenu(self, self.v, *self.optionList)
@@ -351,8 +355,5 @@ class UserInput(tk.Frame):
 
 
 my_input = UserInput()
-my_input.master.title('北市防疫旅館')
+my_input.master.title('台北市防疫旅館查詢篩選小幫手')
 my_input.mainloop()  # 呼叫視窗
-
-
-
